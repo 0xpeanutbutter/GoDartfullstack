@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "/pb";
+
+
+message User {
+  string Id = 1;
+  string UID = 2;
+  string Name = 3;
+  string Address = 4;
+  string PhoneNumber =5;
+  string UserType = 6;
+  string Email = 7;
+  map<string, bool> PendingId = 8;
+  map<string, bool> RequestedId = 9;
+  map<string, bool> ConnectedId = 10;
+}
+  
+message Util {
+  string UID = 1;
+  string Id = 2;
+  User user = 3;
+}
+
+message StatusSuccessful{
+  bool status = 1;
+}
+
+service DonorPatients {
+  rpc CreateUser(Util) returns (User){};
+  rpc Login(Util) returns (User){};
+  rpc DeleteUser(Util) returns (StatusSuccessful);
+  rpc UpdateUser (Util) returns (User){};
+  rpc GetUser(Util) returns (User){};
+  rpc GetAllDonors(Util) returns (stream User){};
+  rpc GetAllPatients(Util) returns (stream User){};
+  rpc SendRequest(Util) returns (StatusSuccessful){};
+  rpc AcceptRequest(Util) returns (StatusSuccessful){};
+  rpc CancelRequest(Util) returns (StatusSuccessful){};
+  rpc CancelConnection(Util) returns (StatusSuccessful){};
+}
